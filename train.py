@@ -52,7 +52,7 @@ def train(opt, trial=None):
 
     # Load the dataset
     temp_transform = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()])
-    all_dataset = CustomImageDataset(directory='/data/furuya/cifar/cifar10/train', transform=temp_transform)
+    all_dataset = CustomImageDataset(directory='/data2/furuya/cifar/path/to/cifar10png/train', transform=temp_transform)
     print(f'num classes: {all_dataset.get_num_classes()}')
 
     # Obtain a DataLoader for calculating dataset mean and standard deviation
@@ -74,7 +74,7 @@ def train(opt, trial=None):
     sys.stdout.flush()
 
     # Define transformations including normalization
-    all_dataset = CustomImageDataset(directory='/data/furuya/cifar/cifar10/train', transform=transform)
+    all_dataset = CustomImageDataset(directory='/data2/furuya/cifar/path/to/cifar10png/train', transform=transform)
 
     # Set sizes for training and validation datasets
     train_size = int(0.8 * len(all_dataset))
@@ -84,8 +84,8 @@ def train(opt, trial=None):
     train_dataset, val_dataset = random_split(all_dataset, [train_size, val_size])
 
     # Obtain DataLoaders for training and validation
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=0, collate_fn=custom_collate_fn)
-    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=0, collate_fn=custom_collate_fn)
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=4, collate_fn=custom_collate_fn)
+    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=4, collate_fn=custom_collate_fn)
 
     # Model selection based on the option provided
     model = vig_b_32_gelu()
